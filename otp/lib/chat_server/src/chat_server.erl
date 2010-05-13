@@ -84,7 +84,7 @@ handle_cast({message, To, From, Message}, State) ->
     UserList = State#state.userlist,
     case lists:keyfind(To, 1, UserList) of
         {To, Pid} ->
-            Pid ! {message, From, Message};
+            chat_client:message(Pid, From, Message);
         false ->
             no_user
     end,
@@ -94,7 +94,7 @@ handle_cast({broadcast, From, Message}, State) ->
     lists:foreach(fun({UserName, Pid}) ->
                           if 
                               UserName =/= From ->
-                                  Pid ! {message, From, Message};
+                                  chat_client:message(Pid, From, Message);
                               true ->
                                   nothing
                           end
