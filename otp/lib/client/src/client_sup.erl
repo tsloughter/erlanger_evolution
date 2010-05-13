@@ -9,7 +9,7 @@
 -behaviour(supervisor).
 
 %% API
--export([start_link/0, login/1]).
+-export([start_link/0, login/2]).
 
 %% Supervisor callbacks
 -export([init/1]).
@@ -34,12 +34,12 @@ start_link() ->
 %%% Supervisor callbacks
 %%%===================================================================
 
-login(UserName) ->
+login(Server, UserName) ->
     Restart = permanent,
     Shutdown = 2000,
     Type = worker,
 
-    AChild = {chat_server, {chat_client, start_link, [UserName]},
+    AChild = {chat_server, {chat_client, start_link, [Server, UserName]},
               Restart, Shutdown, Type, [chat_server]},
 
     supervisor:start_child(?SERVER, AChild).

@@ -10,7 +10,9 @@
 -behaviour(gen_server).
 
 %% API
--export([start_link/0, login/2, logout/1, message/3, broadcast/2]).
+-export([start_link/0, 
+         login/2, logout/1, message/3, broadcast/2,
+         login/3, logout/2, message/4, broadcast/3]).
 
 %% gen_server callbacks
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2,
@@ -36,14 +38,26 @@ start_link() ->
 login(Pid, UserName) ->
     gen_server:call(?SERVER, {login, Pid, UserName}).
 
+login(Server, Pid, UserName) ->
+    gen_server:call(Server, {login, Pid, UserName}).
+
 logout(UserName) ->
     gen_server:call(?SERVER, {logout, UserName}).
+
+logout(Server, UserName) ->
+    gen_server:call(Server, {logout, UserName}).
 
 message(To, From, Message) ->
     gen_server:cast(?SERVER, {message, To, From, Message}).
 
+message(Server, To, From, Message) ->
+    gen_server:cast(Server, {message, To, From, Message}).
+
 broadcast(From, Message) ->
     gen_server:cast(?SERVER, {broadcast, From, Message}).
+
+broadcast(Server, From, Message) ->
+    gen_server:cast(Server, {broadcast, From, Message}).
 
 %%--------------------------------------------------------------------
 %% Function: init(Args) -> {ok, State} |
