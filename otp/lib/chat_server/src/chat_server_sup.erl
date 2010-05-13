@@ -58,8 +58,8 @@ init([]) ->
     Shutdown = 2000,
     Type = worker,
 
-    AChild = {'AName', {'AModule', start_link, []},
-              Restart, Shutdown, Type, ['AModule']},
+    AChild = {chat_server, {chat_server, start_link, []},
+              Restart, Shutdown, Type, [chat_server]},
 
     {ok, {SupFlags, [AChild]}}.
 
