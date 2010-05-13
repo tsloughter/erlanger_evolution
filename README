@@ -1,0 +1,11 @@
+none_otp:
+
+Compile:
+
+erlc *.erl
+
+otp:
+
+Compile:
+
+sinan
