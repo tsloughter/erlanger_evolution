@@ -27,6 +27,7 @@ server_loop(UserList) ->
                                              Name =/= UserName
                                      end, UserList));
         {login, UserName, Pid} ->
+            Pid ! success,
             server_loop([{UserName, Pid}|UserList])                   
     end.
 
