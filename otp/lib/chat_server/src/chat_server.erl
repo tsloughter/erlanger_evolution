@@ -11,7 +11,6 @@
 
 %% API
 -export([start_link/0, 
-         login/2, logout/1, message/3, broadcast/2,
          login/3, logout/2, message/4, broadcast/3]).
 
 %% gen_server callbacks
@@ -35,26 +34,15 @@ start_link() ->
 %%====================================================================
 %% gen_server callbacks
 %%====================================================================
-login(Pid, UserName) ->
-    gen_server:call(?SERVER, {login, Pid, UserName}).
 
 login(Server, Pid, UserName) ->
     gen_server:call(Server, {login, Pid, UserName}).
 
-logout(UserName) ->
-    gen_server:call(?SERVER, {logout, UserName}).
-
 logout(Server, UserName) ->
     gen_server:call(Server, {logout, UserName}).
 
-message(To, From, Message) ->
-    gen_server:cast(?SERVER, {message, To, From, Message}).
-
 message(Server, To, From, Message) ->
     gen_server:cast(Server, {message, To, From, Message}).
-
-broadcast(From, Message) ->
-    gen_server:cast(?SERVER, {broadcast, From, Message}).
 
 broadcast(Server, From, Message) ->
     gen_server:cast(Server, {broadcast, From, Message}).

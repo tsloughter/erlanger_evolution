@@ -32,4 +32,5 @@ server_loop(UserList) ->
             Pid ! success,
             server_loop([{UserName, Pid}|UserList])                   
     end.
-
+    
+    
