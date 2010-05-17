@@ -12,7 +12,8 @@ server_loop(UserList) ->
                     Pid ! {message, From, Message};
                 false ->
                     no_user
-            end;
+            end,
+            server_loop(UserList);
         {broadcast, From, Message} ->
             lists:foreach(fun({UserName, Pid}) ->
                                   if 
@@ -21,7 +22,8 @@ server_loop(UserList) ->
                                       true ->
                                           nothing
                                   end
-                          end, UserList);
+                          end, UserList),
+            server_loop(UserList);                   
         {logout, UserName} ->
             server_loop(lists:filter(fun({Name, _Pid}) ->
                                              Name =/= UserName
